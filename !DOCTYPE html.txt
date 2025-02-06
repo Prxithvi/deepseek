@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background: black;
+            color: white;
+            overflow: hidden;
+            position: relative;
+        }
+        #start-screen {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            flex-direction: column;
+        }
+        .click-box {
+            background-color: pink;
+            padding: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: bold;
+            color: black;
+            transition: background 0.3s;
+            border: 3px solid red;
+            font-family: monospace;
+            text-transform: uppercase;
+        }
+        .hidden {
+            display: none;
+        }
+        .red-button {
+            background-color: red;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .falling-daisy {
+            position: absolute;
+            width: 50px;
+            top: -100px;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        .thanks-animation {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            margin-top: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        #content {
+            display: none;
+            padding: 20px;
+            background: black;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            position: relative;
+        }
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('https://i.imgur.com/ycE19gM.png') repeat;
+            animation: twinkle 3s infinite;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        .fade-text {
+            font-size: 24px;
+            font-weight: bold;
+            font-family: monospace;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeInText 3s forwards;
+        }
+        @keyframes fadeInText {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div id="start-screen">
+        <div class="click-box" onclick="showRedButton()">CLICK HERE TO SEE WHY YOU SHOULD BE MY VALENTINE</div>
+        <button id="red-button" class="red-button hidden" onclick="showThanks()">Proceed</button>
+        <div id="thanks-message" class="thanks-animation hidden">Thanks for clicking, babygirl!</div>
+    </div>
+    <div id="content" class="hidden">
+        <div class="stars"></div>
+        <h2 class="fade-text">YOU ARE ALREADY MY GIRLFRIEND! DO YOU ASK YOUR MOM TO BE YOUR MOM ON MOTHER'S DAY?</h2>
+    </div>
+    <script>
+        function createDaisy() {
+            for (let i = 0; i < 20; i++) {
+                let daisy = document.createElement('img');
+                daisy.src = 'daisy.png';
+                daisy.className = 'falling-daisy';
+                daisy.style.left = `${Math.random() * 100}vw`;
+                daisy.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                daisy.style.animationDelay = `${Math.random() * 2}s`;
+                document.body.appendChild(daisy);
+            }
+        }
+        document.addEventListener("DOMContentLoaded", createDaisy);
+        function showRedButton() {
+            document.querySelector('.click-box').classList.add('hidden');
+            document.getElementById('red-button').classList.remove('hidden');
+        }
+        function showThanks() {
+            document.getElementById('red-button').classList.add('hidden');
+            document.getElementById('thanks-message').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('start-screen').style.display = 'none';
+                document.getElementById('content').classList.remove('hidden');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
